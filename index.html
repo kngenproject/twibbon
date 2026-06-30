@@ -121,7 +121,7 @@
             border-radius: 24px;
             overflow: hidden;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-            background: #f3f4f6;
+            background: #ffffff;
             cursor: move;
             touch-action: none;
             border: 4px solid #38bdf8;
@@ -199,26 +199,32 @@
 </head>
 <body>
 
+<!-- Efek Bubble di Latar Belakang -->
 <div class="bubble-container" id="bubbleContainer"></div>
 
 <div class="card">
+    <!-- Identitas Ceria PAUD -->
     <span class="header-tag">✨ Selamat Datang ✨</span>
     <h2>MPLS</h2>
     <div class="sub-school">PAUD IT ASH SHIDDIQY</div>
     <div class="sub-info">MARGOYOSO • TP 2026-2027</div>
     
+    <!-- Tombol Upload -->
     <label for="uploadFoto" class="upload-label">📸 Pilih Foto Ananda</label>
     <input type="file" id="uploadFoto" accept="image/*">
 
+    <!-- Area Pratinjau Bingkai + Foto -->
     <div class="canvas-wrapper" id="canvasContainer">
         <canvas id="twibbonCanvas" width="1000" height="1000"></canvas>
     </div>
 
+    <!-- Kontrol Zoom -->
     <div class="controls">
         <span class="slider-label">🔍 Geser untuk Atur Ukuran Foto</span>
         <input type="range" id="zoomSlider" class="slider" min="10" max="300" value="100" disabled>
     </div>
 
+    <!-- Tombol Download -->
     <button class="btn-download" id="downloadBtn" disabled>💾 Unduh Twibbon</button>
 </div>
 
@@ -231,31 +237,23 @@
         const bubble = document.createElement('div');
         bubble.classList.add('bubble');
         
-        // Ukuran acak
         const size = Math.random() * 40 + 20 + 'px';
         bubble.style.width = size;
         bubble.style.height = size;
         
-        // Posisi horisontal acak
         bubble.style.left = Math.random() * 100 + 'vw';
-        
-        // Durasi animasi acak
         bubble.style.animationDuration = Math.random() * 5 + 6 + 's';
-        
-        // Warna semburat acak
         bubble.style.borderColor = bubbleColors[Math.floor(Math.random() * bubbleColors.length)];
         
         bubbleContainer.appendChild(bubble);
         
-        // Hapus bubble setelah selesai animasi agar tidak memberatkan browser
         setTimeout(() => {
             bubble.remove();
         }, 11000);
     }
     
-    // Munculkan bubble setiap 1.5 detik
     setInterval(createBubble, 1500);
-    for(let i=0; i<10; i++) { setTimeout(createBubble, Math.random() * 5000); } // Bubble awal
+    for(let i=0; i<10; i++) { setTimeout(createBubble, Math.random() * 5000); }
 
     // --- Logika Twibbon (Canvas API) ---
     const canvas = document.getElementById('twibbonCanvas');
@@ -313,22 +311,19 @@
     function drawCanvas() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Foto Murid
+        // Foto Murid (Lapisan Belakang)
         if (isUserImgLoaded) {
             ctx.save();
             ctx.translate(imgX, imgY);
             ctx.drawImage(userImg, - (userImg.width * imgScale) / 2, - (userImg.height * imgScale) / 2, userImg.width * imgScale, userImg.height * imgScale);
             ctx.restore();
         } else {
-            ctx.fillStyle = "#f3f4f6";
+            // Latar belakang putih bersih sebelum upload foto
+            ctx.fillStyle = "#ffffff";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = "#9ca3af";
-            ctx.font = "bold 40px Arial";
-            ctx.textAlign = "center";
-            ctx.fillText("Foto Adek Di Sini 📸", canvas.width / 2, canvas.height / 2);
         }
 
-        // Bingkai Twibbon
+        // Bingkai Twibbon (Lapisan Depan)
         ctx.drawImage(templateImg, 0, 0, canvas.width, canvas.height);
     }
 
