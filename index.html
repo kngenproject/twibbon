@@ -3,57 +3,128 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Twibbon Generator</title>
+    <title>Twibbon MPLS PAUD IT Ash Shiddiqy</title>
     <style>
-        /* Gaya Tampilan (CSS) */
+        /* Gaya Tampilan Dasar & Efek Bubble */
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
         }
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: #f3f4f6;
+            font-family: 'Comic Sans MS', 'Chalkboard SE', 'Segoe UI', sans-serif;
+            background: linear-gradient(135deg, #ffedd5 0%, #ccfbf1 50%, #e0f2fe 100%);
             color: #1f2937;
             display: flex;
             justify-content: center;
             align-items: center;
             min-height: 100vh;
             padding: 20px;
+            overflow-x: hidden;
+            position: relative;
         }
+
+        /* Container untuk Bubbles */
+        .bubble-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .bubble {
+            position: absolute;
+            bottom: -50px;
+            background: rgba(255, 255, 255, 0.4);
+            border: 2px solid rgba(255, 255, 255, 0.6);
+            border-radius: 50%;
+            box-shadow: inset 0 0 10px rgba(255, 255, 255, 0.5);
+            animation: floatUp 8s infinite linear;
+        }
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) translateX(0) scale(0.5);
+                opacity: 0;
+            }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% {
+                transform: translateY(-110vh) translateX(50px) scale(1.2);
+                opacity: 0;
+            }
+        }
+
+        /* Kartu Utama Berwarna Ceria */
         .card {
             background: #ffffff;
             padding: 30px;
-            border-radius: 16px;
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+            border-radius: 30px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.06);
             text-align: center;
             max-width: 450px;
             width: 100%;
-        }
-        h2 {
-            font-size: 24px;
-            margin-bottom: 8px;
-            color: #111827;
-        }
-        p {
-            font-size: 14px;
-            color: #6b7280;
-            margin-bottom: 24px;
+            border: 6px dashed #fcd34d; /* Garis putus-putus lucu */
+            position: relative;
+            z-index: 10;
         }
         
-        /* Area Canvas / Pratinjau Twibbon */
+        /* Dekorasi Emoji Mainan */
+        .card::before { content: '🎈'; position: absolute; top: -20px; left: -10px; font-size: 35px; }
+        .card::after { content: '🧸'; position: absolute; bottom: -10px; right: -10px; font-size: 35px; }
+
+        /* Judul dan Identitas Sekolah */
+        .header-tag {
+            background-color: #f43f5e;
+            color: white;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 4px 16px;
+            border-radius: 20px;
+            display: inline-block;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            box-shadow: 0 4px 0 #be123c;
+        }
+        h2 {
+            font-size: 32px;
+            color: #2563eb;
+            text-shadow: 2px 2px 0px #bfdbfe;
+            margin-bottom: 4px;
+        }
+        .sub-school {
+            font-size: 20px;
+            color: #059669;
+            font-weight: bold;
+            text-shadow: 1px 1px 0px #a7f3d0;
+        }
+        .sub-info {
+            font-size: 14px;
+            color: #4b5563;
+            margin-top: 4px;
+            margin-bottom: 24px;
+            font-weight: bold;
+            background: #f3f4f6;
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 10px;
+        }
+        
+        /* Bingkai Pratinjau Canvas */
         .canvas-wrapper {
             position: relative;
             width: 100%;
             max-width: 340px;
             aspect-ratio: 1 / 1;
             margin: 0 auto 24px auto;
-            border-radius: 12px;
+            border-radius: 24px;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-            background: #e5e7eb;
-            cursor: move; /* Menandakan foto bisa digeser */
-            touch-action: none; /* Mencegah layar HP ikut tergulung saat menggeser foto */
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            background: #f3f4f6;
+            cursor: move;
+            touch-action: none;
+            border: 4px solid #38bdf8;
         }
         canvas {
             width: 100%;
@@ -61,21 +132,22 @@
             display: block;
         }
         
-        /* Tombol Batalkan / Pilih File */
+        /* Tombol Upload (Kuning Emas) */
         .upload-label {
             display: inline-block;
-            background: #4f46e5;
-            color: white;
-            padding: 12px 24px;
-            border-radius: 8px;
-            font-weight: 600;
+            background: #fbbf24;
+            color: #78350f;
+            padding: 14px 28px;
+            border-radius: 50px;
+            font-weight: bold;
             cursor: pointer;
-            transition: background 0.2s, transform 0.1s;
+            transition: all 0.2s;
             margin-bottom: 20px;
-            font-size: 15px;
+            font-size: 16px;
+            box-shadow: 0 5px 0 #d97706;
         }
-        .upload-label:hover { background: #4338ca; }
-        .upload-label:active { transform: scale(0.98); }
+        .upload-label:hover { background: #f59e0b; transform: translateY(-2px); }
+        .upload-label:active { transform: translateY(3px); box-shadow: 0 2px 0 #d97706; }
         input[type="file"] { display: none; }
 
         /* Slider Kontrol */
@@ -87,66 +159,105 @@
             align-items: center;
         }
         .slider-label {
-            font-size: 13px;
-            color: #4b5563;
-            font-weight: 500;
+            font-size: 14px;
+            color: #374151;
+            font-weight: bold;
         }
         .slider {
             width: 80%;
             max-width: 250px;
-            accent-color: #4f46e5;
+            accent-color: #f43f5e;
             cursor: pointer;
+            height: 8px;
+            border-radius: 5px;
         }
 
-        /* Tombol Unduh */
+        /* Tombol Unduh Hasil (Biru Ceria) */
         .btn-download {
-            background: #10b981;
+            background: #3b82f6;
             color: white;
             border: none;
-            padding: 14px;
-            font-size: 16px;
-            font-weight: 600;
-            border-radius: 8px;
+            padding: 16px;
+            font-size: 18px;
+            font-weight: bold;
+            border-radius: 50px;
             cursor: pointer;
             width: 100%;
-            transition: background 0.2s, opacity 0.2s;
+            transition: all 0.2s;
+            box-shadow: 0 6px 0 #1d4ed8;
         }
-        .btn-download:hover { background: #059669; }
+        .btn-download:hover { background: #2563eb; transform: translateY(-2px); }
+        .btn-download:active { transform: translateY(4px); box-shadow: 0 2px 0 #1d4ed8; }
         .btn-download:disabled {
             background: #d1d5db;
             color: #9ca3af;
             cursor: not-allowed;
+            box-shadow: none;
+            transform: none;
         }
     </style>
 </head>
 <body>
 
+<div class="bubble-container" id="bubbleContainer"></div>
+
 <div class="card">
-    <h2>Twibbon Generator</h2>
-    <p>Pilih foto Anda, atur posisinya dengan digeser/di-zoom, lalu unduh hasilnya.</p>
+    <span class="header-tag">✨ Selamat Datang ✨</span>
+    <h2>MPLS</h2>
+    <div class="sub-school">PAUD IT ASH SHIDDIQY</div>
+    <div class="sub-info">MARGOYOSO • TP 2026-2027</div>
     
-    <!-- Tombol Upload -->
-    <label for="uploadFoto" class="upload-label">📸 Pilih Foto Anda</label>
+    <label for="uploadFoto" class="upload-label">📸 Pilih Foto Ananda</label>
     <input type="file" id="uploadFoto" accept="image/*">
 
-    <!-- Area Pratinjau Bingkai + Foto -->
     <div class="canvas-wrapper" id="canvasContainer">
-        <!-- Resolusi internal sengaja diset 1000x1000 agar hasil unduhan tetap tajam/HD -->
         <canvas id="twibbonCanvas" width="1000" height="1000"></canvas>
     </div>
 
-    <!-- Kontrol Zoom -->
     <div class="controls">
-        <span class="slider-label">Atur Ukuran Foto</span>
+        <span class="slider-label">🔍 Geser untuk Atur Ukuran Foto</span>
         <input type="range" id="zoomSlider" class="slider" min="10" max="300" value="100" disabled>
     </div>
 
-    <!-- Tombol Download -->
-    <button class="btn-download" id="downloadBtn" disabled>Unduh Twibbon</button>
+    <button class="btn-download" id="downloadBtn" disabled>💾 Unduh Twibbon</button>
 </div>
 
 <script>
-    // Logika Pemrosesan Gambar (JavaScript)
+    // Generator Bubble Otomatis via JS
+    const bubbleContainer = document.getElementById('bubbleContainer');
+    const bubbleColors = ['#fecdd3', '#ccfbf1', '#e0f2fe', '#fef08a', '#e9d5ff'];
+    
+    function createBubble() {
+        const bubble = document.createElement('div');
+        bubble.classList.add('bubble');
+        
+        // Ukuran acak
+        const size = Math.random() * 40 + 20 + 'px';
+        bubble.style.width = size;
+        bubble.style.height = size;
+        
+        // Posisi horisontal acak
+        bubble.style.left = Math.random() * 100 + 'vw';
+        
+        // Durasi animasi acak
+        bubble.style.animationDuration = Math.random() * 5 + 6 + 's';
+        
+        // Warna semburat acak
+        bubble.style.borderColor = bubbleColors[Math.floor(Math.random() * bubbleColors.length)];
+        
+        bubbleContainer.appendChild(bubble);
+        
+        // Hapus bubble setelah selesai animasi agar tidak memberatkan browser
+        setTimeout(() => {
+            bubble.remove();
+        }, 11000);
+    }
+    
+    // Munculkan bubble setiap 1.5 detik
+    setInterval(createBubble, 1500);
+    for(let i=0; i<10; i++) { setTimeout(createBubble, Math.random() * 5000); } // Bubble awal
+
+    // --- Logika Twibbon (Canvas API) ---
     const canvas = document.getElementById('twibbonCanvas');
     const ctx = canvas.getContext('2d');
     const uploadInput = document.getElementById('uploadFoto');
@@ -154,31 +265,27 @@
     const downloadBtn = document.getElementById('downloadBtn');
     const container = document.getElementById('canvasContainer');
 
-    // Mengambil file bingkai.png yang berada di folder yang sama
     const URL_TEMPLATE_TWIBBON = 'bingkai.png'; 
 
     let templateImg = new Image();
     let userImg = new Image();
     
     let isUserImgLoaded = false;
-    let imgX = 500, imgY = 500; // Berangkat dari titik tengah canvas (1000 / 2)
+    let imgX = 500, imgY = 500; 
     let imgScale = 1;
     let baseScale = 1;
 
-    // Variabel Deteksi Geser (Drag)
     let isDragging = false;
     let startX, startY;
 
-    // 1. Muat Template Bingkai saat halaman dibuka
+    // Load Bingkai
     templateImg.src = URL_TEMPLATE_TWIBBON;
-    templateImg.onload = () => {
-        drawCanvas();
-    };
+    templateImg.onload = () => { drawCanvas(); };
     templateImg.onerror = () => {
-        alert("Gagal memuat file 'bingkai.png'. Pastikan file bingkai berada di folder yang sama dengan nama yang benar.");
+        alert("Gagal memuat 'bingkai.png'. Letakkan file gambar bingkai Anda di folder yang sama.");
     };
 
-    // 2. Handle Upload Foto Pengguna
+    // Upload Foto
     uploadInput.addEventListener('change', (e) => {
         const file = e.target.files[0];
         if (file) {
@@ -187,13 +294,10 @@
                 userImg.src = event.target.result;
                 userImg.onload = () => {
                     isUserImgLoaded = true;
-                    
-                    // Kalkulasi skala default agar foto langsung menutupi area canvas
                     baseScale = Math.max(canvas.width / userImg.width, canvas.height / userImg.height);
                     zoomSlider.value = 100;
                     imgScale = baseScale;
                     
-                    // Posisikan foto tepat di tengah area canvas
                     imgX = canvas.width / 2;
                     imgY = canvas.height / 2;
 
@@ -206,45 +310,36 @@
         }
     });
 
-    // 3. Fungsi Utama Menggambar Ulang Canvas
     function drawCanvas() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-        // Lapisan 1: Gambar Foto Pengguna (Di Belakang)
+        // Foto Murid
         if (isUserImgLoaded) {
             ctx.save();
             ctx.translate(imgX, imgY);
-            ctx.drawImage(
-                userImg, 
-                - (userImg.width * imgScale) / 2, 
-                - (userImg.height * imgScale) / 2, 
-                userImg.width * imgScale, 
-                userImg.height * imgScale
-            );
+            ctx.drawImage(userImg, - (userImg.width * imgScale) / 2, - (userImg.height * imgScale) / 2, userImg.width * imgScale, userImg.height * imgScale);
             ctx.restore();
         } else {
-            // Tampilan latar belakang bawaan sebelum ada foto
-            ctx.fillStyle = "#e5e7eb";
+            ctx.fillStyle = "#f3f4f6";
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.fillStyle = "#9ca3af";
             ctx.font = "bold 40px Arial";
             ctx.textAlign = "center";
-            ctx.fillText("Pratinjau Twibbon", canvas.width / 2, canvas.height / 2);
+            ctx.fillText("Foto Adek Di Sini 📸", canvas.width / 2, canvas.height / 2);
         }
 
-        // Lapisan 2: Gambar Bingkai Twibbon (Di Depan)
+        // Bingkai Twibbon
         ctx.drawImage(templateImg, 0, 0, canvas.width, canvas.height);
     }
 
-    // 4. Fitur Zoom (Slider)
+    // Slider Zoom
     zoomSlider.addEventListener('input', (e) => {
         if (!isUserImgLoaded) return;
-        const sliderValue = e.target.value / 100;
-        imgScale = baseScale * sliderValue;
+        imgScale = baseScale * (e.target.value / 100);
         drawCanvas();
     });
 
-    // 5. Fitur Geser Menggunakan Mouse / Sentuhan (Drag & Drop)
+    // Kontrol Geser Foto (Mouse & Sentuhan)
     function getEventPos(e) {
         const rect = container.getBoundingClientRect();
         const clientX = e.touches ? e.touches[0].clientX : e.clientX;
@@ -273,20 +368,18 @@
 
     function stopDrag() { isDragging = false; }
 
-    // Event Listener Mouse
     container.addEventListener('mousedown', startDrag);
     window.addEventListener('mousemove', moveDrag);
     window.addEventListener('mouseup', stopDrag);
 
-    // Event Listener Touchscreen (HP)
     container.addEventListener('touchstart', startDrag);
     window.addEventListener('touchmove', moveDrag);
     window.addEventListener('touchend', stopDrag);
 
-    // 6. Fungsi Unduh Hasil Akhir
+    // Download
     downloadBtn.addEventListener('click', () => {
         const link = document.createElement('a');
-        link.download = 'twibbon_hasil.png';
+        link.download = 'MPLS_PAUD_IT_AshShiddiqy.png';
         link.href = canvas.toDataURL('image/png');
         link.click();
     });
